@@ -15,6 +15,10 @@
     "strict": true,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@config/*":[ "src/config/*"],
+      "@database/*": ["src/database/*"]
+    }
   }
 }
