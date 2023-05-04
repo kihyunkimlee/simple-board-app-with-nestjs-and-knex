@@ -24,4 +24,6 @@ async function bootstrap() {
   });
 }
 
-bootstrap();
+setImmediate(async () => {
+  await bootstrap();
+});
