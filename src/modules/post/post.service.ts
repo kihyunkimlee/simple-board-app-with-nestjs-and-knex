@@ -5,6 +5,7 @@ import { InjectKnex, Knex } from 'nestjs-knex';
 import { UserEntity } from '../user/entities/user.entity';
 import { PostEntity } from './entities/post.entity';
 import { UpdatePostInput } from './dto/update-post.input';
+import { PostsDto } from './dto/posts.dto';
 
 @Injectable()
 export class PostService {
@@ -36,6 +37,38 @@ export class PostService {
     }
 
     return post;
+  }
+
+  /**
+   * 게시글을 목록 조회 합니다.
+   * @param offset
+   * @param limit
+   */
+  async list(offset: number, limit: number): Promise<PostsDto> {
+    this.logger.debug(`offset: ${offset}, limit: ${limit}`);
+
+    const [row] = await this.knex<PostEntity>('post').where('is_used', true).count({ cnt: '*' });
+    const total = row.cnt as number;
+
+    const postList = await this.knex<PostEntity>('post')
+      .select({ id: this.knex.raw('CAST(id AS CHAR)') })
+      .select('title')
+      .select('content')
+      .select({ createdAt: 'created_at' })
+      .select({ createdBy: 'created_by' })
+      .select({ updatedAt: 'updated_at' })
+      .select({ updatedBy: 'updated_by' })
+      .andWhere('is_used', true)
+      .orderBy('created_at', 'desc')
+      .limit(limit)
+      .offset(offset);
+
+    return {
+      offset,
+      limit,
+      items: postList,
+      total,
+    };
   }
 
   /**

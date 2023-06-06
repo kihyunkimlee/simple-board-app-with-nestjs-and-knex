@@ -1,6 +1,9 @@
 ### id 로 게시글 조회하기
 GET http://localhost:3000/post/1
 
+### 게시글 목록 조회하기
+GET http://localhost:3000/post?offset=0&limit=5
+
 ### 게시글 생성 하기
 POST http://localhost:3000/post
 Content-Type: application/json
@@ -19,7 +22,7 @@ Content-Type: application/json
 
 {
   "input": {
-    "id": "1",
+    "id": "2",
     "title": "테스트 게시글입니다",
     "content": "테스트 게시글입니다.",
     "updatedBy": "1"

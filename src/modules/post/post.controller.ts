@@ -3,6 +3,7 @@ import { PostService } from './post.service';
 import { PostDto } from './dto/post.dto';
 import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
+import { PostsDto } from './dto/posts.dto';
 
 @Controller('post')
 export class PostController {
@@ -11,6 +12,11 @@ export class PostController {
   @Get(':id')
   get(@Param('id') id: string): Promise<PostDto | null> {
     return this.postService.get(id);
+  }
+
+  @Get()
+  list(@Query('offset') offset: number, @Query('limit') limit: number): Promise<PostsDto> {
+    return this.postService.list(offset, limit);
   }
 
   @Post()
