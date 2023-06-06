@@ -48,8 +48,8 @@ export class PostService {
     this.logger.debug(`input: ${JSON.stringify(input)}`);
 
     // 존재하는 유저인지 확인
-    const [row] = await this.knex<UserEntity>('user').where('id', createdBy).count('*', { as: 'count' });
-    if (row.count === 0) {
+    const [row] = await this.knex<UserEntity>('user').where('id', createdBy).count({ cnt: '*' });
+    if (row.cnt! === 0) {
       throw new Error('id 에 해당하는 유저가 존재하지 않습니다!');
     }
 
@@ -68,11 +68,8 @@ export class PostService {
     this.logger.debug(`id: ${id}, input: ${JSON.stringify(input)}`);
 
     // 존재하는 게시글인지 확인
-    const [post] = await this.knex<PostEntity>('post')
-      .where('id', id)
-      .andWhere('is_used', true)
-      .count('*', { as: 'count' });
-    if (post.count === 0) {
+    const [post] = await this.knex<PostEntity>('post').where('id', id).andWhere('is_used', true).count({ cnt: '*' });
+    if (post.cnt! === 0) {
       throw new Error('id 에 해당하는 게시글이 존재하지 않습니다!');
     }
 
@@ -80,8 +77,8 @@ export class PostService {
     const [user] = await this.knex<UserEntity>('user')
       .where('id', updatedBy)
       .andWhere('is_used', true)
-      .count('*', { as: 'count' });
-    if (user.count === 0) {
+      .count({ cnt: '*' });
+    if (user.cnt! === 0) {
       throw new Error('id 에 해당하는 유저가 존재하지 않습니다!');
     }
 

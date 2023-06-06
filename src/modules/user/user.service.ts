@@ -21,8 +21,8 @@ export class UserService {
     const { email, password, nickname } = input;
 
     // 이메일 중복 체크
-    const [row] = await this.knex<UserEntity>('user').where('email', email).count('*', { as: 'count' });
-    if (row.count > 0) {
+    const [row] = await this.knex<UserEntity>('user').where('email', email).count({ cnt: '*' });
+    if (row.cnt! > 0) {
       throw new Error('중복된 이메일입니다!');
     }
 
@@ -65,12 +65,9 @@ export class UserService {
 
     this.logger.debug(`id: ${id}, nickname: ${nickname}`);
 
-    const [row] = await this.knex<UserEntity>('user')
-      .where('id', id)
-      .andWhere('is_used', true)
-      .count('*', { as: 'count' });
+    const [row] = await this.knex<UserEntity>('user').where('id', id).andWhere('is_used', true).count({ cnt: '*' });
 
-    if (row.count === 0) {
+    if (row.cnt! === 0) {
       throw new Error('id 에 해당하는 사용자가 없습니다!');
     }
 
