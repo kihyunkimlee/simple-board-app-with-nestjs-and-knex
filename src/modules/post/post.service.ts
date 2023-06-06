@@ -48,7 +48,16 @@ export class PostService {
     this.logger.debug(`offset: ${offset}, limit: ${limit}`);
 
     const [row] = await this.knex<PostEntity>('post').where('is_used', true).count({ cnt: '*' });
+
     const total = row.cnt as number;
+    if (total === 0) {
+      return {
+        offset,
+        limit,
+        items: [],
+        total,
+      };
+    }
 
     const postList = await this.knex<PostEntity>('post')
       .select({ id: this.knex.raw('CAST(id AS CHAR)') })
@@ -58,8 +67,58 @@ export class PostService {
       .select({ createdBy: 'created_by' })
       .select({ updatedAt: 'updated_at' })
       .select({ updatedBy: 'updated_by' })
-      .andWhere('is_used', true)
+      .where('is_used', true)
       .orderBy('created_at', 'desc')
+      .limit(limit)
+      .offset(offset);
+
+    return {
+      offset,
+      limit,
+      items: postList,
+      total,
+    };
+  }
+
+  /**
+   * 유저가 작성한 게시글을 목록 조회합니다.
+   * @param userId
+   * @param offset
+   * @param limit
+   */
+  async listByUser(userId: string, offset: number, limit: number): Promise<PostsDto> {
+    this.logger.debug(`offset: ${offset}, limit: ${limit}`);
+
+    const [row] = await this.knex<PostEntity>('post')
+      .innerJoin<UserEntity>('user', 'post.created_by', '=', 'user.id')
+      .where('post.is_used', true)
+      .andWhere('user.id', userId)
+      .andWhere('user.is_used', true)
+      .count({ cnt: '*' });
+
+    const total = row.cnt as number;
+    if (total === 0) {
+      return {
+        offset,
+        limit,
+        items: [],
+        total,
+      };
+    }
+
+    const postList = await this.knex<PostEntity>('post')
+      .innerJoin<UserEntity>('user', 'post.created_by', '=', 'user.id')
+      .select({ id: this.knex.raw('CAST(post.id AS CHAR)') })
+      .select(this.knex.ref('title').withSchema('post'))
+      .select(this.knex.ref('content').withSchema('post'))
+      .select(this.knex.ref('created_at').withSchema('post').as('createdAt'))
+      .select(this.knex.ref('created_by').withSchema('post').as('createdBy'))
+      .select(this.knex.ref('updated_at').withSchema('post').as('updatedAt'))
+      .select(this.knex.ref('updated_by').withSchema('post').as('updatedBy'))
+      .where('post.is_used', true)
+      .andWhere('user.id', userId)
+      .andWhere('user.is_used', true)
+      .orderBy('post.created_at', 'desc')
       .limit(limit)
       .offset(offset);
 
