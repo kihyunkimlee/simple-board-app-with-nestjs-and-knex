@@ -1,0 +1,21 @@
+version: '3'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-local
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./src:/app/src
+      - ./.env.local:/app/.env.local
+    environment:
+      DATABASE_HOST_URL: 'db'
+  db:
+    image: mysql:8
+    ports:
+      - '3306:3306'
+      - '33060:33060'
+    environment:
+      MYSQL_DATABASE: 'test'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
