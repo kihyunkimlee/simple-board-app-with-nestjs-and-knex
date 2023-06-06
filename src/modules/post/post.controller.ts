@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
 import { PostService } from './post.service';
 import { PostDto } from './dto/post.dto';
 import { CreatePostInput } from './dto/create-post.input';
@@ -18,7 +18,7 @@ export class PostController {
     return this.postService.create(input);
   }
 
-  @Put()
+  @Patch()
   update(@Body('input') input: UpdatePostInput): Promise<PostDto> {
     return this.postService.update(input);
   }

@@ -1,0 +1,28 @@
+### 유저 생성 하기
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "input": {
+    "email": "test123@gmail.com",
+    "password": "1234",
+    "nickname": "newwwbi"
+  }
+}
+
+### id 로 유저 조회하기
+GET http://localhost:3000/user?id=1
+
+### 유저 정보 수정하기
+PATCH http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "input": {
+    "id": "1",
+    "nickname": "newbi"
+  }
+}
+
+### 유저 정보 삭제하기
+DELETE http://localhost:3000/user?id=1
