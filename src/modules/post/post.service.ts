@@ -89,12 +89,13 @@ export class PostService {
   async listByUser(userId: string, offset: number, limit: number): Promise<PostsDto> {
     this.logger.debug(`offset: ${offset}, limit: ${limit}`);
 
-    const [row] = await this.knex<PostEntity>('post')
+    const qb = this.knex<PostEntity>('post')
       .innerJoin<UserEntity>('user', 'post.created_by', '=', 'user.id')
       .where('post.is_used', true)
       .andWhere('user.id', userId)
-      .andWhere('user.is_used', true)
-      .count({ cnt: '*' });
+      .andWhere('user.is_used', true);
+
+    const [row] = await qb.clone().count({ cnt: '*' });
 
     const total = row.cnt as number;
     if (total === 0) {
@@ -106,8 +107,8 @@ export class PostService {
       };
     }
 
-    const postList = await this.knex<PostEntity>('post')
-      .innerJoin<UserEntity>('user', 'post.created_by', '=', 'user.id')
+    const postList = await qb
+      .clone()
       .select({ id: this.knex.raw('CAST(post.id AS CHAR)') })
       .select(this.knex.ref('title').withSchema('post'))
       .select(this.knex.ref('content').withSchema('post'))
@@ -115,9 +116,6 @@ export class PostService {
       .select(this.knex.ref('created_by').withSchema('post').as('createdBy'))
       .select(this.knex.ref('updated_at').withSchema('post').as('updatedAt'))
       .select(this.knex.ref('updated_by').withSchema('post').as('updatedBy'))
-      .where('post.is_used', true)
-      .andWhere('user.id', userId)
-      .andWhere('user.is_used', true)
       .orderBy('post.created_at', 'desc')
       .limit(limit)
       .offset(offset);
