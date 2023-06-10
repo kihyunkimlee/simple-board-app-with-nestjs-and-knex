@@ -11,21 +11,20 @@ Content-Type: application/json
 }
 
 ### id 로 유저 조회하기
-GET http://localhost:3000/user?id=1
+GET http://localhost:3000/user/1
 
 ### 유저 정보 수정하기
-PATCH http://localhost:3000/user
+PATCH http://localhost:3000/user/1
 Content-Type: application/json
 
 {
   "input": {
-    "id": "1",
     "nickname": "newbi"
   }
 }
 
 ### 유저 정보 삭제하기
-DELETE http://localhost:3000/user?id=1
+DELETE http://localhost:3000/user/1
 
 ### 유저가 작성한 게시글 목록 조회하기
 GET http://localhost:3000/user/1/post?offset=0&limit=5

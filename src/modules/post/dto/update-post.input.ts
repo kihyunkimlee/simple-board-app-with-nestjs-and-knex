@@ -1,10 +1,6 @@
 import { IsNotEmpty, IsNumberString, IsString, MaxLength } from 'class-validator';
 
 export class UpdatePostInput {
-  @IsNumberString()
-  @IsNotEmpty()
-  id: string;
-
   @MaxLength(255)
   @IsString()
   @IsNotEmpty()

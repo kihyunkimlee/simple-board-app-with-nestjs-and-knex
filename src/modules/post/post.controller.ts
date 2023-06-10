@@ -24,9 +24,9 @@ export class PostController {
     return this.postService.create(input);
   }
 
-  @Patch()
-  update(@Body('input') input: UpdatePostInput): Promise<PostDto> {
-    return this.postService.update(input);
+  @Patch(':id')
+  update(@Param('id') id: string, @Body('input') input: UpdatePostInput): Promise<PostDto> {
+    return this.postService.update(id, input);
   }
 
   @Delete(':id')

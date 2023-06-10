@@ -17,12 +17,11 @@ Content-Type: application/json
 }
 
 ### 게시글 수정하기
-PATCH http://localhost:3000/post
+PATCH http://localhost:3000/post/1
 Content-Type: application/json
 
 {
   "input": {
-    "id": "2",
     "title": "테스트 게시글입니다",
     "content": "테스트 게시글입니다.",
     "updatedBy": "1"

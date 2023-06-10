@@ -58,10 +58,11 @@ export class UserService {
 
   /**
    * 유저 정보를 수정합니다.
+   * @param id
    * @param input
    */
-  async update(input: UpdateUserInput): Promise<User> {
-    const { id, nickname } = input;
+  async update(id: string, input: UpdateUserInput): Promise<User> {
+    const { nickname } = input;
 
     this.logger.debug(`id: ${id}, nickname: ${nickname}`);
 

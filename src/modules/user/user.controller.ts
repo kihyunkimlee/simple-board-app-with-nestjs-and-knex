@@ -15,18 +15,18 @@ export class UserController {
     return this.userService.create(input);
   }
 
-  @Get()
-  get(@Query('id') id: string): Promise<User | null> {
+  @Get(':id')
+  get(@Param('id') id: string): Promise<User | null> {
     return this.userService.get(id);
   }
 
-  @Patch()
-  update(@Body('input') input: UpdateUserInput): Promise<User> {
-    return this.userService.update(input);
+  @Patch(':id')
+  update(@Param('id') id: string, @Body('input') input: UpdateUserInput): Promise<User> {
+    return this.userService.update(id, input);
   }
 
-  @Delete()
-  delete(@Query('id') id: string): Promise<User> {
+  @Delete(':id')
+  delete(@Param('id') id: string): Promise<User> {
     return this.userService.delete(id);
   }
 

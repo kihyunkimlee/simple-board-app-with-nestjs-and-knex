@@ -150,10 +150,11 @@ export class PostService {
 
   /**
    * 게시글을 수정합니다.
+   * @param id
    * @param input
    */
-  async update(input: UpdatePostInput): Promise<PostDto> {
-    const { id, title, content, updatedBy } = input;
+  async update(id: string, input: UpdatePostInput): Promise<PostDto> {
+    const { title, content, updatedBy } = input;
 
     this.logger.debug(`id: ${id}, input: ${JSON.stringify(input)}`);
 
