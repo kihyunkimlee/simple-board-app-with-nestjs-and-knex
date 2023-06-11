@@ -4,6 +4,9 @@ GET http://localhost:3000/post/1
 ### 게시글 목록 조회하기
 GET http://localhost:3000/post?offset=0&limit=5
 
+### 제목으로 게시글 목록 조회하기
+GET http://localhost:3000/post?title=ORM&offset=0&limit=5
+
 ### 게시글 생성 하기
 POST http://localhost:3000/post
 Content-Type: application/json

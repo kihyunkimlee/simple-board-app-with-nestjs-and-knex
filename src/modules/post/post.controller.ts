@@ -15,8 +15,12 @@ export class PostController {
   }
 
   @Get()
-  list(@Query('offset') offset: number, @Query('limit') limit: number): Promise<PostsDto> {
-    return this.postService.list(offset, limit);
+  list(
+    @Query('offset') offset: number,
+    @Query('limit') limit: number,
+    @Query('title') title?: string,
+  ): Promise<PostsDto> {
+    return this.postService.list(offset, limit, title);
   }
 
   @Post()

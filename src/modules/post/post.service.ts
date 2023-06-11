@@ -43,11 +43,18 @@ export class PostService {
    * 게시글을 목록 조회 합니다.
    * @param offset
    * @param limit
+   * @param title
    */
-  async list(offset: number, limit: number): Promise<PostsDto> {
+  async list(offset: number, limit: number, title?: string): Promise<PostsDto> {
     this.logger.debug(`offset: ${offset}, limit: ${limit}`);
 
-    const [row] = await this.knex<PostEntity>('post').where('is_used', true).count({ cnt: '*' });
+    const qb = this.knex<PostEntity>('post').where('is_used', true);
+
+    if (title) {
+      qb.andWhereILike('title', `%${title}%`);
+    }
+
+    const [row] = await qb.clone().count({ cnt: '*' });
 
     const total = row.cnt as number;
     if (total === 0) {
@@ -59,7 +66,8 @@ export class PostService {
       };
     }
 
-    const postList = await this.knex<PostEntity>('post')
+    const postList = await qb
+      .clone()
       .select({ id: this.knex.raw('CAST(id AS CHAR)') })
       .select('title')
       .select('content')
@@ -67,7 +75,6 @@ export class PostService {
       .select({ createdBy: 'created_by' })
       .select({ updatedAt: 'updated_at' })
       .select({ updatedBy: 'updated_by' })
-      .where('is_used', true)
       .orderBy('created_at', 'desc')
       .limit(limit)
       .offset(offset);
