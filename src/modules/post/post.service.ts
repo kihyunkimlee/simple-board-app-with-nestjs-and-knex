@@ -25,9 +25,9 @@ export class PostService {
       .select('title')
       .select('content')
       .select({ createdAt: 'created_at' })
-      .select({ createdBy: 'created_by' })
+      .select({ createdBy: this.knex.raw('CAST(created_by AS CHAR)') })
       .select({ updatedAt: 'updated_at' })
-      .select({ updatedBy: 'updated_by' })
+      .select({ updatedBy: this.knex.raw('CAST(updated_by AS CHAR)') })
       .where('id', id)
       .andWhere('is_used', true)
       .first();
@@ -72,9 +72,9 @@ export class PostService {
       .select('title')
       .select('content')
       .select({ createdAt: 'created_at' })
-      .select({ createdBy: 'created_by' })
+      .select({ createdBy: this.knex.raw('CAST(created_by AS CHAR)') })
       .select({ updatedAt: 'updated_at' })
-      .select({ updatedBy: 'updated_by' })
+      .select({ updatedBy: this.knex.raw('CAST(updated_by AS CHAR)') })
       .orderBy('created_at', 'desc')
       .limit(limit)
       .offset(offset);
@@ -96,11 +96,7 @@ export class PostService {
   async listByUser(userId: string, offset: number, limit: number): Promise<PostsDto> {
     this.logger.debug(`offset: ${offset}, limit: ${limit}`);
 
-    const qb = this.knex<PostEntity>('post')
-      .innerJoin<UserEntity>('user', 'post.created_by', '=', 'user.id')
-      .where('post.is_used', true)
-      .andWhere('user.id', userId)
-      .andWhere('user.is_used', true);
+    const qb = this.knex<PostEntity>('post').where('is_used', true).andWhere('created_by', userId);
 
     const [row] = await qb.clone().count({ cnt: '*' });
 
@@ -116,14 +112,14 @@ export class PostService {
 
     const postList = await qb
       .clone()
-      .select({ id: this.knex.raw('CAST(post.id AS CHAR)') })
-      .select(this.knex.ref('title').withSchema('post'))
-      .select(this.knex.ref('content').withSchema('post'))
-      .select(this.knex.ref('created_at').withSchema('post').as('createdAt'))
-      .select(this.knex.ref('created_by').withSchema('post').as('createdBy'))
-      .select(this.knex.ref('updated_at').withSchema('post').as('updatedAt'))
-      .select(this.knex.ref('updated_by').withSchema('post').as('updatedBy'))
-      .orderBy('post.created_at', 'desc')
+      .select({ id: this.knex.raw('CAST(id AS CHAR)') })
+      .select('title')
+      .select('content')
+      .select({ createdAt: 'created_at' })
+      .select({ createdBy: this.knex.raw('CAST(created_by AS CHAR)') })
+      .select({ updatedAt: 'updated_at' })
+      .select({ updatedBy: this.knex.raw('CAST(updated_by AS CHAR)') })
+      .orderBy('created_at', 'desc')
       .limit(limit)
       .offset(offset);
 
