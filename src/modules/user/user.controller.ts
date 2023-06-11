@@ -30,12 +30,12 @@ export class UserController {
     return this.userService.delete(id);
   }
 
-  @Get(':id/post')
-  listByUser(
+  @Get(':id/comment-post')
+  listPostCommentedByUser(
     @Param('id') userId: string,
     @Query('offset') offset: number,
     @Query('limit') limit: number,
   ): Promise<PostsDto> {
-    return this.postService.listByUser(userId, offset, limit);
+    return this.postService.listCommentedByUser(userId, offset, limit);
   }
 }

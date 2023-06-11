@@ -6,6 +6,7 @@ import { UserEntity } from '../user/entities/user.entity';
 import { PostEntity } from './entities/post.entity';
 import { UpdatePostInput } from './dto/update-post.input';
 import { PostsDto } from './dto/posts.dto';
+import { CommentEntity } from '../comment/entities/comment.entity';
 
 @Injectable()
 export class PostService {
@@ -88,15 +89,18 @@ export class PostService {
   }
 
   /**
-   * 유저가 작성한 게시글을 목록 조회합니다.
+   * 유저가 댓글 단 게시글을 목록 조회합니다.
    * @param userId
    * @param offset
    * @param limit
    */
-  async listByUser(userId: string, offset: number, limit: number): Promise<PostsDto> {
-    this.logger.debug(`offset: ${offset}, limit: ${limit}`);
+  async listCommentedByUser(userId: string, offset: number, limit: number): Promise<PostsDto> {
+    this.logger.debug(`userId: ${userId}, offset: ${offset}, limit: ${limit}`);
 
-    const qb = this.knex<PostEntity>('post').where('is_used', true).andWhere('created_by', userId);
+    const qb = this.knex<PostEntity>('post').whereIn(
+      'id',
+      this.knex<CommentEntity>('comment').select('post_id').where('created_by', userId),
+    );
 
     const [row] = await qb.clone().count({ cnt: '*' });
 
