@@ -1,0 +1,27 @@
+### 댓글 생성하기
+POST http://localhost:3000/post/1/comment
+Content-Type: application/json
+
+{
+  "input": {
+    "content": "테스트 댓글입니다.",
+    "createdBy": "1"
+  }
+}
+
+### 게시글의 댓글 목록 조회하기
+GET http://localhost:3000/post/1/comment?offset=0&limit5
+
+### 댓글 수정하기
+PATCH http://localhost:3000/post/1/comment/3
+Content-Type: application/json
+
+{
+  "input": {
+    "content": "테스트 댓글입니다.",
+    "updatedBy": "1"
+  }
+}
+
+### 댓글 삭제하기
+DELETE http://localhost:3000/post/1/comment/2

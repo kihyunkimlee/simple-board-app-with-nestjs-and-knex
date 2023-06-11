@@ -1,0 +1,449 @@
+GET http://localhost:3000/post/1/comment?offset=0&limit5=
+
+<> 2023-06-11T155456.200.json
+
+###
+
+DELETE http://localhost:3000/post/1/comment/2
+
+<> 2023-06-11T155454.200.json
+
+###
+
+GET http://localhost:3000/post/1/comment?offset=0&limit5=
+
+<> 2023-06-11T155448.200.json
+
+###
+
+DELETE http://localhost:3000/post/1/comment/1
+
+<> 2023-06-11T155302.200.json
+
+###
+
+DELETE http://localhost:3000/post/1/comment/1
+
+<> 2023-06-11T155225.404.json
+
+###
+
+GET http://localhost:3000/post/1/comment?offset=5&limit5=
+
+<> 2023-06-11T154510.200.json
+
+###
+
+GET http://localhost:3000/post/1/comment?offset=0&limit5=
+
+<> 2023-06-11T154505.200.json
+
+###
+
+GET http://localhost:3000/post/1/comment
+
+<> 2023-06-11T154446.200.json
+
+###
+
+POST http://localhost:3000/post/1/comment
+Content-Type: application/json
+
+{
+  "input": {
+    "content": "테스트 댓글입니다.",
+    "createdBy": "1"
+  }
+}
+
+<> 2023-06-11T152947.201.json
+
+###
+
+POST http://localhost:3000/post/1/comment
+Content-Type: application/json
+
+{
+  "input": {
+    "content": "테스트 댓글입니다.",
+    "createdBy": "1"
+  }
+}
+
+<> 2023-06-11T152855.500.json
+
+###
+
+GET http://localhost:3000/post/1
+
+<> 2023-06-11T144419.200.json
+
+###
+
+GET http://localhost:3000/post?offset=0&limit=5
+
+<> 2023-06-11T144411.200.json
+
+###
+
+POST http://localhost:3000/post
+Content-Type: application/json
+
+{
+  "input": {
+    "title": "테스트 게시글입니다",
+    "content": "테스트 게시글입니다.",
+    "createdBy": "1"
+  }
+}
+
+<> 2023-06-11T144407.201.json
+
+###
+
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "input": {
+    "email": "test123@gmail.com",
+    "password": "1234",
+    "nickname": "newwwbi"
+  }
+}
+
+<> 2023-06-11T144400.201.json
+
+###
+
+GET http://localhost:3000/post?title=ORM&offset=0&limit=5
+
+<> 2023-06-11T144347.200.json
+
+###
+
+GET http://localhost:3000/post?title=개구리&offset=0&limit=5
+
+<> 2023-06-11T144203.500.json
+
+###
+
+GET http://localhost:3000/post?offset=0&limit=5&title=개구리
+
+<> 2023-06-11T005204.200.json
+
+###
+
+GET http://localhost:3000/post?offset=0&limit=5&title=개구리
+
+<> 2023-06-11T005125.200.json
+
+###
+
+GET http://localhost:3000/post?offset=0&limit=5&title=테스트
+
+<> 2023-06-11T005108.200.json
+
+###
+
+GET http://localhost:3000/post?offset=0&limit=5&title=테스트
+
+<> 2023-06-11T004238.500.json
+
+###
+
+GET http://localhost:3000/post?offset=0&limit=5
+
+<> 2023-06-11T004235.200.json
+
+###
+
+GET http://localhost:3000/post?offset=0&limit=5&title=테스트
+
+<> 2023-06-11T004232.500.json
+
+###
+
+GET http://localhost:3000/post?offset=0&limit=5
+
+<> 2023-06-11T003057.200.json
+
+###
+
+GET http://localhost:3000/post?offset=0&limit=5&title=테스트
+
+<> 2023-06-11T003028.500.json
+
+###
+
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "input": {
+    "email": "test123@gmail.com",
+    "password": "1234",
+    "nickname": "newwwbi"
+  }
+}
+
+<> 2023-06-11T001656.500.json
+
+###
+
+PATCH http://localhost:3000/post/1
+Content-Type: application/json
+
+{
+  "input": {
+    "title": "테스트 게시글입니다222",
+    "content": "테스트 게시글입니다.",
+    "updatedBy": "1"
+  }
+}
+
+<> 2023-06-11T001110.200.json
+
+###
+
+PATCH http://localhost:3000/post/1
+Content-Type: application/json
+
+{
+  "input": {
+    "id": "2",
+    "title": "테스트 게시글입니다",
+    "content": "테스트 게시글입니다.",
+    "updatedBy": "1"
+  }
+}
+
+<> 2023-06-11T001057.200.json
+
+###
+
+POST http://localhost:3000/post
+Content-Type: application/json
+
+{
+  "input": {
+    "title": "테스트 게시글입니다",
+    "content": "테스트 게시글입니다.",
+    "createdBy": "1"
+  }
+}
+
+<> 2023-06-11T001032.500.json
+
+###
+
+DELETE http://localhost:3000/user/2
+
+<> 2023-06-11T000922.500.json
+
+###
+
+PATCH http://localhost:3000/user/1
+Content-Type: application/json
+
+{
+  "input": {
+    "nickname": "newwwwwwbi"
+  }
+}
+
+<> 2023-06-11T000913.200.json
+
+###
+
+PATCH http://localhost:3000/user/1
+Content-Type: application/json
+
+{
+  "input": {
+    "nickname": "newbi"
+  }
+}
+
+<> 2023-06-11T000908.200.json
+
+###
+
+GET http://localhost:3000/user/1
+
+<> 2023-06-11T000902.200.json
+
+###
+
+GET http://localhost:3000/user/2
+
+###
+
+GET http://localhost:3000/user/2
+
+###
+
+GET http://localhost:3000/user/2
+
+###
+
+GET http://localhost:3000/user/1
+
+<> 2023-06-11T000816.200.json
+
+###
+
+PATCH http://localhost:3000/post
+Content-Type: application/json
+
+{
+  "input": {
+    "id": "3",
+    "title": "게시글 수정 테스트",
+    "tags": ["Hello", "New", "World"],
+    "content": "게시글 수정 테스트 글입니다.",
+    "updatedBy": "1"
+  }
+}
+
+<> 2023-06-08T235609.200.json
+
+###
+
+POST http://localhost:3000/post
+Content-Type: application/json
+
+{
+  "input": {
+    "title": "게시글 생성 테스트",
+    "tags": ["Hello", "World"],
+    "content": "게시글 생성 테스트 글입니다.",
+    "createdBy": "1"
+  }
+}
+
+<> 2023-06-08T235559.201.json
+
+###
+
+POST http://localhost:3000/post
+Content-Type: application/json
+
+{
+  "input": {
+    "title": "테스트 게시글입니다",
+    "tags": ["테", "스", "트"],
+    "content": "테스트 게시글입니다.",
+    "createdBy": "1"
+  }
+}
+
+<> 2023-06-08T235100.201.json
+
+###
+
+POST http://localhost:3000/post
+Content-Type: application/json
+
+{
+  "input": {
+    "title": "테스트 게시글입니다",
+    "tags": ["테", "스", "트"],
+    "content": "테스트 게시글입니다.",
+    "createdBy": "1"
+  }
+}
+
+<> 2023-06-08T234808.201.json
+
+###
+
+POST http://localhost:3000/post
+Content-Type: application/json
+
+{
+  "input": {
+    "title": "테스트 게시글입니다",
+    "tags": ["테", "스", "트"],
+    "content": "테스트 게시글입니다.",
+    "createdBy": "1"
+  }
+}
+
+<> 2023-06-08T234739.500.json
+
+###
+
+POST http://localhost:3000/post
+Content-Type: application/json
+
+{
+  "input": {
+    "title": "테스트 게시글입니다",
+    "tags": ["테", "스", "트"],
+    "content": "테스트 게시글입니다.",
+    "createdBy": "1"
+  }
+}
+
+<> 2023-06-08T234329.500.json
+
+###
+
+GET http://localhost:3000/user/1/post?offset=0&limit=5
+
+<> 2023-06-08T211844.200.json
+
+###
+
+GET http://localhost:3000/user/1/post?offset=0&limit=5
+
+<> 2023-06-08T211200.200.json
+
+###
+
+GET http://localhost:3000/user?id=1
+
+<> 2023-06-08T211125.200.json
+
+###
+
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "input": {
+    "email": "test123@gmail.com",
+    "password": "1234",
+    "nickname": "newwwbi"
+  }
+}
+
+<> 2023-06-08T211115.500.json
+
+###
+
+GET http://localhost:3000/user/1/post?offset=0&limit=5
+
+<> 2023-06-06T195737.200.json
+
+###
+
+GET http://localhost:3000/user/1/post?offset=0&limit=5
+
+<> 2023-06-06T195634.500.json
+
+###
+
+GET http://localhost:3000/user/1/post?offset=0&limit=5
+
+<> 2023-06-06T195602.200.json
+
+###
+
+GET http://localhost:3000/user/1/post?offset=0&limit=5
+
+<> 2023-06-06T195332.500.json
+
+###
+
