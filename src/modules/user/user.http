@@ -29,10 +29,10 @@ DELETE http://localhost:3000/user/1
 ### 유저가 댓글 단 게시글 목록 조회하기
 GET http://localhost:3000/user/1/comment-post?offset=0&limit=5
 
-### 사용자 설정 정보 조회하기
+### 유저 설정 정보 조회하기
 GET http://localhost:3000/user/1/setting
 
-### 사용자 설정 정보 수정하기
+### 유저 설정 정보 수정하기
 PATCH http://localhost:3000/user/1/setting
 Content-Type: application/json
 

@@ -12,26 +12,49 @@ import { UpdateUserSettingInput } from './dto/update-user-setting.input';
 export class UserController {
   constructor(private readonly userService: UserService, private readonly postService: PostService) {}
 
-  @Post()
-  create(@Body('input') input: CreateUserInput): Promise<UserDto> {
-    return this.userService.create(input);
-  }
-
+  /**
+   * 유저 정보를 조회합니다.
+   * @param id
+   */
   @Get(':id')
   get(@Param('id') id: string): Promise<UserDto | null> {
     return this.userService.get(id);
   }
 
+  /**
+   * 유저 정보를 생성합니다.
+   * @param input
+   */
+  @Post()
+  create(@Body('input') input: CreateUserInput): Promise<UserDto> {
+    return this.userService.create(input);
+  }
+
+  /**
+   * 유저 정보를 수정합니다.
+   * @param id
+   * @param input
+   */
   @Patch(':id')
   update(@Param('id') id: string, @Body('input') input: UpdateUserInput): Promise<UserDto> {
     return this.userService.update(id, input);
   }
 
+  /**
+   * 유저 정보를 삭제합니다.
+   * @param id
+   */
   @Delete(':id')
   delete(@Param('id') id: string): Promise<UserDto> {
     return this.userService.delete(id);
   }
 
+  /**
+   * 유저가 댓글 단 게시글을 목록 조회합니다.
+   * @param userId
+   * @param offset
+   * @param limit
+   */
   @Get(':id/comment-post')
   listPostCommentedByUser(
     @Param('id') userId: string,
@@ -41,11 +64,20 @@ export class UserController {
     return this.postService.listCommentedByUser(userId, offset, limit);
   }
 
+  /**
+   * 유저 설정 정보를 조회합니다.
+   * @param id
+   */
   @Get(':id/setting')
   getSetting(@Param('id') id: string): Promise<UserSettingDto> {
     return this.userService.getSetting(id);
   }
 
+  /**
+   * 유저 설정 정보를 수정합니다.
+   * @param id
+   * @param input
+   */
   @Patch(':id/setting')
   updateSetting(@Param('id') id: string, @Body('input') input: UpdateUserSettingInput): Promise<UserSettingDto> {
     return this.userService.updateSetting(id, input);
