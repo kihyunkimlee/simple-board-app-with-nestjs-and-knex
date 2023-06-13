@@ -98,10 +98,9 @@ export class PostService {
   async listCommentedByUser(userId: string, offset: number, limit: number): Promise<PostsDto> {
     this.logger.debug(`userId: ${userId}, offset: ${offset}, limit: ${limit}`);
 
-    const qb = this.knex<PostEntity>('post').whereIn(
-      'id',
-      this.knex<CommentEntity>('comment').select('post_id').where('created_by', userId),
-    );
+    const qb = this.knex<PostEntity>('post')
+      .whereIn('id', this.knex<CommentEntity>('comment').select('post_id').where('created_by', userId))
+      .andWhere('is_used', true);
 
     const [row] = await qb.clone().count({ cnt: '*' });
 
