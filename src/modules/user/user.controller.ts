@@ -7,6 +7,8 @@ import { PostsDto } from '../post/dto/posts.dto';
 import { PostService } from '../post/post.service';
 import { UserSettingDto } from './dto/user-setting.dto';
 import { UpdateUserSettingInput } from './dto/update-user-setting.input';
+import { AddFavoritePostInput } from './dto/add-favorite-post.input';
+import { RemoveFavoritePostInput } from './dto/remove-favorite-post.input';
 
 @Controller('user')
 export class UserController {
@@ -81,5 +83,40 @@ export class UserController {
   @Patch(':id/setting')
   updateSetting(@Param('id') id: string, @Body('input') input: UpdateUserSettingInput): Promise<UserSettingDto> {
     return this.userService.updateSetting(id, input);
+  }
+
+  /**
+   * 게시글을 즐겨찾기 목록에 추가합니다.
+   * @param id
+   * @param input
+   */
+  @Post(':id/favorite-post')
+  addFavoritePost(@Param('id') id: string, @Body('input') input: AddFavoritePostInput): Promise<void> {
+    return this.userService.addFavoritePost(id, input);
+  }
+
+  /**
+   * 게시글을 즐겨찾기 목록에서 삭제합니다.
+   * @param id
+   * @param input
+   */
+  @Post(':id/favorite-post')
+  removeFavoritePost(@Param('id') id: string, @Body('input') input: RemoveFavoritePostInput): Promise<void> {
+    return this.userService.removeFavoritePost(id, input);
+  }
+
+  /**
+   * 유저가 즐겨찾기 목록에 추가한 게시글을 목록 조회합니다.
+   * @param userId
+   * @param offset
+   * @param limit
+   */
+  @Get(':id/favorite-post')
+  listFavoritePost(
+    @Param('id') userId: string,
+    @Query('offset') offset: number,
+    @Query('limit') limit: number,
+  ): Promise<PostsDto> {
+    return this.postService.listFavoritePost(userId, offset, limit);
   }
 }

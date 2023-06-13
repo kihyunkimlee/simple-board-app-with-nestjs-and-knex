@@ -7,6 +7,7 @@ import { PostEntity } from './entities/post.entity';
 import { UpdatePostInput } from './dto/update-post.input';
 import { PostsDto } from './dto/posts.dto';
 import { CommentEntity } from '../comment/entities/comment.entity';
+import { FavoritePostEntity } from '../user/entities/favorite-post.entity';
 
 @Injectable()
 export class PostService {
@@ -124,6 +125,54 @@ export class PostService {
       .select({ updatedAt: 'updated_at' })
       .select({ updatedBy: this.knex.raw('CAST(updated_by AS CHAR)') })
       .orderBy('created_at', 'desc')
+      .limit(limit)
+      .offset(offset);
+
+    return {
+      offset,
+      limit,
+      items: postList,
+      total,
+    };
+  }
+
+  /**
+   * 유저가 즐겨찾기 목록에 추가한 게시글을 목록 조회합니다.
+   * @param userId
+   * @param offset
+   * @param limit
+   */
+  async listFavoritePost(userId: string, offset: number, limit: number): Promise<PostsDto> {
+    this.logger.debug(`userId: ${userId}, offset: ${offset}, limit: ${limit}`);
+
+    const qb = this.knex<PostEntity>('post')
+      .innerJoin<FavoritePostEntity>('favorite-post', function () {
+        this.on('post.id', '=', 'favorite-post.post_id').andOn('favorite-post.user_id', '=', userId);
+      })
+      .where('post.is_used', true);
+
+    const [row] = await qb.clone().count({ cnt: '*' });
+
+    const total = row.cnt as number;
+    if (total === 0) {
+      return {
+        offset,
+        limit,
+        items: [],
+        total,
+      };
+    }
+
+    const postList = await qb
+      .clone()
+      .select({ id: this.knex.raw('CAST(post.id AS CHAR)') })
+      .select({ title: 'post.title' })
+      .select(this.knex.ref('content').withSchema('post'))
+      .select(this.knex.ref('created_at').withSchema('post').as('createdAt'))
+      .select({ createdBy: this.knex.raw('CAST(post.created_by AS CHAR)') })
+      .select(this.knex.ref('updated_at').withSchema('post').as('updatedAt'))
+      .select({ updatedBy: this.knex.raw('CAST(post.updated_by AS CHAR)') })
+      .orderBy('post.created_at', 'desc')
       .limit(limit)
       .offset(offset);
 

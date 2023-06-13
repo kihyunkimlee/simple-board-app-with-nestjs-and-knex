@@ -6,6 +6,9 @@ import { UserDto } from './dto/user.dto';
 import { UpdateUserInput } from './dto/update-user.input';
 import { UserSettingDto } from './dto/user-setting.dto';
 import { UpdateUserSettingInput } from './dto/update-user-setting.input';
+import { AddFavoritePostInput } from './dto/add-favorite-post.input';
+import { FavoritePostEntity } from './entities/favorite-post.entity';
+import { RemoveFavoritePostInput } from './dto/remove-favorite-post.input';
 
 @Injectable()
 export class UserService {
@@ -142,5 +145,34 @@ export class UserService {
       .where('id', id);
 
     return this.getSetting(id);
+  }
+
+  /**
+   * 게시글을 즐겨찾기 목록에 추가합니다.
+   * @param id
+   * @param input
+   */
+  async addFavoritePost(id: string, input: AddFavoritePostInput): Promise<void> {
+    this.logger.debug(`id: ${id}, input: ${JSON.stringify(input)}`);
+
+    const { postId } = input;
+
+    await this.knex<FavoritePostEntity>('favorite-post').insert({
+      user_id: parseInt(id),
+      post_id: parseInt(postId),
+    });
+  }
+
+  /**
+   * 게시글을 즐겨찾기 목록에서 삭제합니다.
+   * @param id
+   * @param input
+   */
+  async removeFavoritePost(id: string, input: RemoveFavoritePostInput): Promise<void> {
+    this.logger.debug(`id: ${id}, input: ${JSON.stringify(input)}`);
+
+    const { postId } = input;
+
+    await this.knex<FavoritePostEntity>('favorite-post').delete().where('user_id', id).andWhere('post_id', postId);
   }
 }

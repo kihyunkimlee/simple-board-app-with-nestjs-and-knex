@@ -42,3 +42,26 @@ Content-Type: application/json
     "receivePromotionAlarm": false
   }
 }
+
+### 게시글을 즐겨찾기 목록에 추가하기
+POST http://localhost:3000/user/1/favorite-post
+Content-Type: application/json
+
+{
+  "input": {
+    "postId": "1"
+  }
+}
+
+### 게시글을 즐겨찾기 목록에서 삭제하기
+DELETE http://localhost:3000/user/1/favorite-post
+Content-Type: application/json
+
+{
+  "input": {
+    "postId": "1"
+  }
+}
+
+### 유저가 즐겨찾기 목록에 추가한 게시글 목록 조회하기
+GET http://localhost:3000/user/1/favorite-post?offset=0&limit=5
